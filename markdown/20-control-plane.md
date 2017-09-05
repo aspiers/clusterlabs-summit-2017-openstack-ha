@@ -1,4 +1,4 @@
-<!-- .slide: data-state="section-break" id="control-plane" data-timing="5" -->
+<!-- .slide: data-state="section-break" id="control-plane" data-menu-title="Control plane HA" data-timing="5" -->
 # HA in OpenStack's control plane
 
 
@@ -42,7 +42,7 @@ Note:
 
 
 <!-- .slide: data-state="normal" id="neutron-L3-analysis" data-menu-title="L3 HA analysis" data-timing="5" -->
-# L3 HA in Neutron - analysis
+# L3 HA in Neutron — analysis
 
 *   [`neutron` HA is tricky](https://youtu.be/vBZgtHgSdOY), but out of the
 scope of this talk
@@ -67,31 +67,31 @@ Note:
 # HAProxy and VIPs
 
 
-<!-- .slide: data-state="blank-slide" class="full-screen" id="HOS-control-plane-1" data-menu-title="HAproxy 1" data-timing="40" -->
+<!-- .slide: data-state="blank-slide" class="full-screen" id="HOS-control-plane-1" data-menu-title="HAProxy 1" data-timing="40" -->
 <a href="https://docs.hpcloud.com/hos-5.x/helion/planning/high_availability.html#HP3.0HA__api_request">
     <img alt="HOS 5.0 API request message flow 1" src="images/HPE_HA_Flow-1.png"/>
 </a>
 
 
-<!-- .slide: data-state="blank-slide" class="full-screen" id="HOS-control-plane-2" data-menu-title="HAproxy 2" data-timing="40" -->
+<!-- .slide: data-state="blank-slide" class="full-screen" id="HOS-control-plane-2" data-menu-title="HAProxy 2" data-timing="40" -->
 <a href="https://docs.hpcloud.com/hos-5.x/helion/planning/high_availability.html#HP3.0HA__api_request">
     <img alt="HOS 5.0 API request message flow 3" src="images/HPE_HA_Flow-2.png"/>
 </a>
 
 
-<!-- .slide: data-state="blank-slide" class="full-screen" id="HOS-control-plane-3" data-menu-title="HAproxy 3" data-timing="40" -->
+<!-- .slide: data-state="blank-slide" class="full-screen" id="HOS-control-plane-3" data-menu-title="HAProxy 3" data-timing="40" -->
 <a href="https://docs.hpcloud.com/hos-5.x/helion/planning/high_availability.html#HP3.0HA__api_request">
     <img alt="HOS 5.0 API request message flow 4" src="images/HPE_HA_Flow-3.png"/>
 </a>
 
 
-<!-- .slide: data-state="blank-slide" class="full-screen" id="HOS-control-plane-4" data-menu-title="HAproxy 4" data-timing="40" -->
+<!-- .slide: data-state="blank-slide" class="full-screen" id="HOS-control-plane-4" data-menu-title="HAProxy 4" data-timing="40" -->
 <a href="https://docs.hpcloud.com/hos-5.x/helion/planning/high_availability.html#HP3.0HA__api_request">
     <img alt="HOS 5.0 API request message flow 5" src="images/HPE_HA_Flow-4.png"/>
 </a>
 
 
-<!-- .slide: data-state="blank-slide" class="full-screen" id="HOS-control-plane-5" data-menu-title="HAproxy 5" data-timing="40" -->
+<!-- .slide: data-state="blank-slide" class="full-screen" id="HOS-control-plane-5" data-menu-title="HAProxy 5" data-timing="40" -->
 <a href="https://docs.hpcloud.com/hos-5.x/helion/planning/high_availability.html#HP3.0HA__api_request">
     <img alt="HOS 5.0 API request message flow 6" src="images/HPE_HA_Flow-5.png"/>
 </a>
@@ -150,62 +150,3 @@ Note:
     -   storage management
     -   https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/11/html/understanding_red_hat_openstack_platform_high_availability/pacemaker#pacemaker-virt
 
-
-<!-- .slide: data-state="normal" id="control-plane-questions" data-timing="40" -->
-## Remaining questions
-
-*   How should we handle stateless active-active API services?
-*   VIP per HAproxy node, with DNS round-robin between them?
-*   Should we tackle Pacemaker phobia?  If so, how?
-*   Should we start moving resources out of core cluster onto remotes?
-
-
-<!-- .slide: data-state="normal" id="control-plane-api-1" data-menu-title="Handling API services" data-timing="40" -->
-## How should we handle API services?
-
-Option 1: [Move to `systemd`](http://blog.clusterlabs.org/blog/2016/next-openstack-ha-arch#objection-2---pacemaker-has-better-monitoring)
-
-*   Pros
-    *   Simplifies cluster
-    *   Prepares for containerized future
-*   Cons
-    *   Assumes all services can tolerate flaky dependencies
-    *   **Does <!-- .element: style="fg-bright-red" --> not handle malfunctioning services, only crashing ones**
-    *   (Requires separate monitoring / alerting component)
-
-
-<!-- .slide: data-state="normal" id="control-plane-api-2" data-menu-title="Handling API services" data-timing="40" -->
-## How should we handle API services?
-
-Option 2: Use [OCF RAs](https://launchpad.net/openstack-resource-agents)
-
-*   Pros
-    *   More robust functional monitoring
-*   Cons
-    *   Duplicates a lot of logic / data already packaged by vendor
-    *   Incorrect separation of concerns
-
-
-<!-- .slide: data-state="normal" id="control-plane-api-2" data-menu-title="Handling API services" data-timing="40" -->
-## How should we handle API services?
-
-Option 3: RA / `systemd` hybrids
-
-*   Pros
-    *   Best of breed
-*   Cons
-    *   Unproven approach?
-
-
-<!-- .slide: data-state="normal" id="composable-roles" data-menu-title="Composable roles" data-timing="40" -->
-## Should we start moving resources out of core cluster onto remotes?
-
-http://blog.clusterlabs.org/blog/2016/composable-openstack-ha
-
-*   Pros:
-    * avoids need for multiple clusters
-    * avoids problems with cross-cluster ordering
-*   Cons
-    * liveness check reduced to depending on single TCP connection?
-
-Can we auto-promote remotes to core to maintain quorum?

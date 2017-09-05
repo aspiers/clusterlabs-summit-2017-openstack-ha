@@ -31,3 +31,5 @@
         Brief summary
     *   <!-- .element: class="fragment" data-fragment-index="2" -->
         Questions for the Pacemaker community (you!)
+*   <!-- .element: class="fragment" data-fragment-index="3" -->
+    General questions for the Pacemaker community
