@@ -113,7 +113,7 @@
         margin-top: 0.4em;
     }
 
-    h3 {
+    h3, h3 > code, h3 > a {
         font-size: 2rem;
         font-weight: bold;
         color: $SUSE-green;
@@ -125,12 +125,12 @@
         margin: 0;
     }
 
-    a {
+    a, a > code {
         text-decoration: none;
         color: $bright-blue !important;
     }
 
-    a:hover {
+    a:hover, a:hover > code {
         color: $bright-royal !important;
     }
 
