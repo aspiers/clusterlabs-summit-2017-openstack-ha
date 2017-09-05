@@ -9,7 +9,7 @@
         Subject: [HA] i can haz pets in my cloud?
 
 *   [Weekly IRC meetings](https://wiki.openstack.org/wiki/Meetings/HATeamMeeting)
-    at Wednesday 9am UTC
+    at Wednesday 9am UTC (needs to be changed?)
 *   https://launchpad.net/openstack-resource-agents
 *   [HA guide](http://docs.openstack.org/ha-guide/) under
     [active development](https://bugs.launchpad.net/openstack-manuals/+bugs?field.tag=ha-guide)

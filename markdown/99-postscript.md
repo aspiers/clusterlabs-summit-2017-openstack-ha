@@ -2,8 +2,8 @@
 # Questions?
 
 <div class="qrcode" id="qrcode-talk-end"/>
-<h3 style="text-align: center"><a href="https://aspiers.github.io/openstack-day-israel-2017-compute-ha/" target="_blank"
-       id="talk-end">https://aspiers.github.io/openstack-day-israel-2017-compute-ha/</a></h3>
+<h3 style="text-align: center"><a href="https://aspiers.github.io/clusterlabs-summit-2017-openstack-ha/" target="_blank"
+       id="talk-end">https://aspiers.github.io/clusterlabs-summit-2017-openstack-ha/</a></h3>
 
 
 <!-- .slide: data-menu-title="Disclaimers" id="disclaimers" data-state="green-bg" -->

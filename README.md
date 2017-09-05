@@ -1,8 +1,8 @@
-# Compute HA presentation
+# OpenStack HA presentation
 
 This repo contains the source code for presentation slides about High
-Availability (HA) for compute nodes within
-[OpenStack](http://openstack.org/) clouds.
+Availability (HA) within [OpenStack](http://openstack.org/) clouds,
+given at the [Clusterlabs Summit 2017](http://plan.alteeve.ca/index.php/Main_Page).
 
 It is based on
 [a template by Adam Spiers](https://github.com/aspiers/presentation-template/)
@@ -13,7 +13,7 @@ Hakim El-Hattab and contributors) as the underlying presentation
 technology.
 
 **You can
-[view the slides online](http://aspiers.github.io/openstack-day-israel-2017-compute-ha/)
+[view the slides online](http://aspiers.github.io/clusterlabs-summit-2017-openstack-ha/)
 here**; press `Space` to advance 1 slide at a time, or `?` for help.
 
 ## How to use
