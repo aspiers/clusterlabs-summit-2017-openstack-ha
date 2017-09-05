@@ -343,13 +343,6 @@ Note:
 </div>
 
 
-<!-- .slide: data-state="section-break" id="terminology" data-timing="15" -->
-# Brief interlude: `nova evacuate`
-
-Note:
-This is a good time to introduce `nova evacuate`.
-
-
 <!-- .slide: data-state="normal" id="evacuate-architecture" data-menu-title="nova's recovery API" class="architecture" data-timing="30" -->
 ## `nova`'s recovery API
 
@@ -388,7 +381,6 @@ Note:
     `nova evacuate`.  So we just call that API and `nova` takes care
     of the rest.
 *   Without shared storage, simply rebuilds from scratch
-
 
 <!-- .slide: data-state="normal" id="nova-evacuate" --
 ## `nova evacuate`

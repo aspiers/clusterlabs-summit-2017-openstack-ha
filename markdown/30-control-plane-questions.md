@@ -1,4 +1,4 @@
-<!-- .slide: data-state="section-break" id="control-plane-question-time" data-menu-title="Control plane questions" data-timing="5" -->
+<!-- .slide: data-state="section-break" id="control-plane-question-section" data-menu-title="Control plane questions" data-timing="5" -->
 # Question time
 
 
@@ -15,6 +15,12 @@
     Should we tackle Pacemaker phobia?  If so, how?
 *   <!-- .element: class="fragment" -->
     Should we start moving resources out of core cluster onto remotes?
+*   <!-- .element: class="fragment" -->
+    Does Pacemaker need better maintenance capabilities?
+*   <!-- .element: class="fragment" -->
+    How do we handle multi-site clouds?
+*   <!-- .element: class="fragment" -->
+    Indirect probes?
 
 Note:
 - emoticon is "face screaming in fear"
@@ -99,9 +105,10 @@ Pacemaker auto-restarts service on crash
 <!-- .slide: data-state="normal" id="control-plane-api-3" data-menu-title="systemd" data-timing="40" -->
 ## How should we handle API services?
 
-### Option 3: [`systemd` only, no Pacemaker](http://blog.clusterlabs.org/blog/2016/next-openstack-ha-arch), as per Red Hat
+### Option 3: `systemd` only, no Pacemaker, as per Red Hat
 
-`systemd` auto-restarts service on crash
+*   http://blog.clusterlabs.org/blog/2016/next-openstack-ha-arch
+*   `systemd` auto-restarts service on crash
 
 *   <!-- .element: class="fragment" data-fragment-index="1" -->
     Pros
@@ -180,11 +187,34 @@ http://blog.clusterlabs.org/blog/2016/composable-openstack-ha
 
 *   <!-- .element: class="fragment" -->
     Pros:
-    * avoids need for multiple clusters
-    * avoids problems with cross-cluster ordering
+    *   much more flexible architecture
+    *   avoids need for multiple clusters
+    *   avoids problems with cross-cluster ordering
 *   <!-- .element: class="fragment" -->
     Cons
-    * liveness check reduced to depending on single TCP connection?
+    *   liveness check reduced to depending on single TCP connection?
 
 Can we auto-promote remotes to core to maintain quorum?
 <!-- .element: class="fragment" -->
+
+
+<!-- .slide: data-state="normal" id="maintenance" data-timing="40" -->
+## Resource maintenance
+
+*   Sometimes need to restart services (e.g. reload config)
+*   Can't put a single resource on a single node in maintenance mode
+*   Can only put a whole node or a whole service in maintenance mode
+
+Can we do better?  Do we need to?
+
+
+<!-- .slide: data-state="normal" id="multi-site" data-menu-title="Multi-site" data-timing="40" -->
+## How do we handle multi-site clouds?
+
+FIXME
+
+
+<!-- .slide: data-state="normal" id="indirect-probes" data-menu-title="Indirect probes" data-timing="40" -->
+## Can we have indirect liveness probes?
+
+Like with the Gossip protocol
