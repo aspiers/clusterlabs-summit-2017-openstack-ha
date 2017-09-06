@@ -4,7 +4,7 @@
 
 <!-- .slide: data-state="blank-slide" class="full-screen" id="user-story" data-menu-title="User story" data-timing="40" -->
 <a href="http://specs.openstack.org/openstack/openstack-user-stories/user-stories/proposed/ha_vm.html">
-    <img alt="User story" src="images/user-story.png"/>
+    <img alt="User story" data-src="images/user-story.png"/>
 </a>
 
 

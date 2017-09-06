@@ -1,4 +1,4 @@
-#control-plane {
+#typical-control-plane {
     .diagrams {
         width: 40%;
     }
@@ -33,25 +33,17 @@
     }
 }
 
-#compute-failure {
-    h2 {
-        position: relative;
-        top: -30px;
-    }
+#neutron-L3 {
+    p {
+        height: 82%;
+        overflow: hidden;
 
-    img {
-        position: absolute;
-    }
-
-    img.arch {
-        width: 70%;
-        left: 7%;
-        top: 8%
-    }
-
-    img.bang {
-        height: 32%;
-        left: 55%;
-        top: 36%;
+        img {
+            height: 115%;
+            margin: -6%;
+            /* width: 119%; */
+            max-width: 150%;
+            max-height: 150%;
+        }
     }
 }

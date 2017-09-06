@@ -57,7 +57,7 @@ https://launchpad.net/openstack-resource-agents
 
 *   <!-- .element: class="fragment" data-fragment-index="1" -->
     Pros
-    *   Fairly robust functional monitoring
+    *   Fairly robust functional monitoring (in theory)
 *   <!-- .element: class="fragment" data-fragment-index="2" -->
     Cons
     *   <!-- .element: class="fragment" data-fragment-index="2" -->
@@ -94,8 +94,6 @@ Pacemaker auto-restarts service on crash
         Poor man's failure notifications for free via Pacemaker UIs
 *   <!-- .element: class="fragment" data-fragment-index="3" -->
     Cons
-    *   <!-- .element: class="fragment" data-fragment-index="3" -->
-        Pacemaker has to take care of ordering
     *   <!-- .element: class="fragment" data-fragment-index="4" -->
         **Does not handle malfunctioning services, only crashing
         ones**
@@ -117,21 +115,36 @@ Pacemaker auto-restarts service on crash
 *   <!-- .element: class="fragment" data-fragment-index="2" -->
     Cons
     *   <!-- .element: class="fragment" data-fragment-index="2" -->
-        (Assumes all services can robustly tolerate dependencies going down)
-        <!-- .element: class="fg-medium-neutral" -->
+        Assumes all services can robustly tolerate dependencies going down
+        <!-- .element: class="fg-medium-dark-neutral" -->
     *   <!-- .element: class="fragment" data-fragment-index="3" -->
-        (Requires separate monitoring / alerting component)
-        <!-- .element: class="fg-medium-neutral" -->
+        Failures not surfaced via UI &rarr;
+        requires separate monitoring / alerting component
+        <!-- .element: class="fg-medium-dark-neutral" -->
     *   <!-- .element: class="fragment" data-fragment-index="4" -->
         **Does not handle malfunctioning services, only crashing
         ones**
         <!-- .element: class="fg-bright-red" -->
 
 
-<!-- .slide: data-state="normal" id="control-plane-api-4" data-menu-title="OCF wrapping systemd" data-timing="40" -->
+<!-- .slide: data-state="normal" id="control-plane-api-4" data-menu-title="systemd health checks" data-timing="40" -->
 ## How should we handle API services?
 
-### Option 4: OCF RAs wrapping `systemctl` / `service(8)`
+### Option 4: Enhance `systemd` to allow health checks
+
+*   <!-- .element: class="fragment" -->
+    Pros
+    *   Eliminates all duplication
+    *   Cluster configuration is trivial
+*   <!-- .element: class="fragment" -->
+    Cons
+    *   Requires `systemd` development
+
+
+<!-- .slide: data-state="normal" id="control-plane-api-5" data-menu-title="OCF wrapping systemd" data-timing="40" -->
+## How should we handle API services?
+
+### Option 5: OCF RAs wrapping `systemctl` / `service(8)`
 
 *   `start` / `stop` / `status` delegated to `systemd`
 *   `monitor` implemented in OCF RA
@@ -144,37 +157,44 @@ Pacemaker auto-restarts service on crash
     *   Clean separation of concerns (monitoring vs. control)
 *   <!-- .element: class="fragment" -->
     Cons
+    *   Cluster configuration remains relatively complex
     *   Have to poll; can't interact with `systemd` via `dbus`
         signalling
     *   Would have to duplicate Pacemaker's logic for
         dealing with `systemd` quirks
 
 
-<!-- .slide: data-state="normal" id="control-plane-api-5" data-menu-title="systemd health checks" data-timing="40" -->
+<!-- .slide: data-state="normal" id="control-plane-api-6" data-menu-title="OCF wrapping systemd" data-timing="40" -->
 ## How should we handle API services?
 
-### Option 5: Enhance `systemd` to allow health checks
+### Option 6: enhance Pacemaker to support `systemd:` / `ocf:` hybrids
+
+*   `start` / `stop` / `status` via `systemd`
+*   `monitor` via OCF RA
+    *   (or better, delegate to script reusable by other monitoring
+        frameworks)
 
 *   <!-- .element: class="fragment" -->
     Pros
-    *   Eliminates all duplication
-    *   Cluster configuration is trivial
+    *   Eliminates most duplication between RA and package
+    *   Clean separation of concerns (monitoring vs. control)
 *   <!-- .element: class="fragment" -->
     Cons
-    *   Requires `systemd` development
+    *   Cluster configuration remains relatively complex
+    *   More work for Ken
 
 
-<!-- .slide: data-state="normal" id="control-plane-api-6" data-menu-title="systemd health checks" data-timing="40" -->
+<!-- .slide: data-state="normal" id="control-plane-api-7" data-menu-title="systemd health checks" data-timing="40" -->
 ## How should we handle API services?
 
-### Option 6: `container` meta-attribute
+### Option 7: use undocumented `container` meta-attribute
 
 Pair `systemd` resource with monitor-only OCF RA
 
 *   <!-- .element: class="fragment" -->
     Pros
     *   Eliminates all duplication
-    *   No modification to Pacemaker required
+    *   No modification to Pacemaker or `systemd` required
 *   <!-- .element: class="fragment" -->
     Cons
     *   Cluster configuration remains relatively complex
@@ -202,16 +222,26 @@ Can we auto-promote remotes to core to maintain quorum?
 ## Resource maintenance
 
 *   Sometimes need to restart services (e.g. reload config)
-*   Can't put a single resource on a single node in maintenance mode
-*   Can only put a whole node or a whole service in maintenance mode
+*   <!-- .element: class="fragment" -->
+    Can't put a single resource on a single node in maintenance mode
+*   <!-- .element: class="fragment" -->
+    Can only put a whole node or a whole service in maintenance mode
 
 Can we do better?  Do we need to?
+<!-- .element: class="fragment" -->
 
 
 <!-- .slide: data-state="normal" id="multi-site" data-menu-title="Multi-site" data-timing="40" -->
 ## How do we handle multi-site clouds?
 
-FIXME
+*   e.g. multiple regions, shared Keystone
+*   <!-- .element: class="fragment" -->
+    Keystone reads can be distributed across sites
+*   <!-- .element: class="fragment" -->
+    Keystone writes are more difficult
+    *   Need to ensure they get directed to one site
+*   <!-- .element: class="fragment" -->
+    `booth` is obvious candidate for deciding master site
 
 
 <!-- .slide: data-state="normal" id="indirect-probes" data-menu-title="Indirect probes" data-timing="40" -->

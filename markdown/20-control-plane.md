@@ -3,7 +3,7 @@
 
 
 <!-- .slide: data-state="normal" id="typical-control-plane" class="diagram-and-list" data-timing="40" -->
-## Typical HA control plane
+## Typical OpenStack HA control plane
 
 <div class="diagrams">
     <img class="services" data-src="images/services-cluster.svg"
@@ -16,9 +16,10 @@
 *   <!-- .element: class="fragment" -->
     Stateless active-active API services
 *   <!-- .element: class="fragment" -->
-    Galera DB: active-passive / single master with replication
+    [Galera DB](https://mariadb.com/kb/en/the-mariadb-library/galera-cluster/):
+    active-passive / single master with replication
 *   <!-- .element: class="fragment" -->
-    RabbitMQ active-active
+    [RabbitMQ](https://www.rabbitmq.com/) active-active
 *   <!-- .element: class="fragment" -->
     [HAProxy](http://www.haproxy.org/) load-balancer
 *   <!-- .element: class="fragment" -->
@@ -37,7 +38,7 @@ Note:
 # L3 HA in Neutron (networking service)
 
 <a href="https://docs.hpcloud.com/hos-5.x/helion/planning/high_availability.html#HP3.0HA__CVR">
-    <img alt="Neutron L3 HA" src="images/HPE_HA_Layer-3HA.png"/>
+    <img alt="Neutron L3 HA" data-src="images/HPE_HA_Layer-3HA.png"/>
 </a>
 
 
@@ -46,7 +47,15 @@ Note:
 
 *   [`neutron` HA is tricky](https://youtu.be/vBZgtHgSdOY), but out of the
 scope of this talk
-*   See  https://ethercalc.openstack.org/Pike-Neutron-L3-HA
+*   <!-- .element: class="fragment" -->
+    See https://ethercalc.openstack.org/Pike-Neutron-L3-HA for analysis
+    of various failure modes
+
+<a href="https://ethercalc.openstack.org/Pike-Neutron-L3-HA" class="fragment">
+    <img alt="screenshot of Neutron L3 HA analysis matrix"
+         data-src="images/L3-HA-ethercalc.png"
+         style="height: 69%; margin-left: 13%; margin-top: -1%" />
+</a>
 
 
 <!-- .slide: data-state="normal" id="control-plane-caveats" data-timing="5" -->
@@ -57,7 +66,7 @@ scope of this talk
     under development
 *   <!-- .element: class="fragment" -->
     General phobia of Pacemaker in some parts of the OpenStack community
-    *   `keepalived` often used instead for VIPs
+    *   So `keepalived` often used instead for VIPs
 
 Note:
 - Will speculate later in talk on reasons for Pacemaker phobia
@@ -69,31 +78,31 @@ Note:
 
 <!-- .slide: data-state="blank-slide" class="full-screen" id="HOS-control-plane-1" data-menu-title="HAProxy 1" data-timing="40" -->
 <a href="https://docs.hpcloud.com/hos-5.x/helion/planning/high_availability.html#HP3.0HA__api_request">
-    <img alt="HOS 5.0 API request message flow 1" src="images/HPE_HA_Flow-1.png"/>
+    <img alt="HOS 5.0 API request message flow 1" data-src="images/HPE_HA_Flow-1.png"/>
 </a>
 
 
 <!-- .slide: data-state="blank-slide" class="full-screen" id="HOS-control-plane-2" data-menu-title="HAProxy 2" data-timing="40" -->
 <a href="https://docs.hpcloud.com/hos-5.x/helion/planning/high_availability.html#HP3.0HA__api_request">
-    <img alt="HOS 5.0 API request message flow 3" src="images/HPE_HA_Flow-2.png"/>
+    <img alt="HOS 5.0 API request message flow 3" data-src="images/HPE_HA_Flow-2.png"/>
 </a>
 
 
 <!-- .slide: data-state="blank-slide" class="full-screen" id="HOS-control-plane-3" data-menu-title="HAProxy 3" data-timing="40" -->
 <a href="https://docs.hpcloud.com/hos-5.x/helion/planning/high_availability.html#HP3.0HA__api_request">
-    <img alt="HOS 5.0 API request message flow 4" src="images/HPE_HA_Flow-3.png"/>
+    <img alt="HOS 5.0 API request message flow 4" data-src="images/HPE_HA_Flow-3.png"/>
 </a>
 
 
 <!-- .slide: data-state="blank-slide" class="full-screen" id="HOS-control-plane-4" data-menu-title="HAProxy 4" data-timing="40" -->
 <a href="https://docs.hpcloud.com/hos-5.x/helion/planning/high_availability.html#HP3.0HA__api_request">
-    <img alt="HOS 5.0 API request message flow 5" src="images/HPE_HA_Flow-4.png"/>
+    <img alt="HOS 5.0 API request message flow 5" data-src="images/HPE_HA_Flow-4.png"/>
 </a>
 
 
 <!-- .slide: data-state="blank-slide" class="full-screen" id="HOS-control-plane-5" data-menu-title="HAProxy 5" data-timing="40" -->
 <a href="https://docs.hpcloud.com/hos-5.x/helion/planning/high_availability.html#HP3.0HA__api_request">
-    <img alt="HOS 5.0 API request message flow 6" src="images/HPE_HA_Flow-5.png"/>
+    <img alt="HOS 5.0 API request message flow 6" data-src="images/HPE_HA_Flow-5.png"/>
 </a>
 
 <!--
