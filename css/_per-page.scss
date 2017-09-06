@@ -18,7 +18,7 @@
     }
 
     @import '_control-plane';
-    //@import '_control-plane-questions';
+    @import '_control-plane-questions';
     @import '_sequitur';
     @import '_compute-plane';
     //@import '_compute-plane-questions';

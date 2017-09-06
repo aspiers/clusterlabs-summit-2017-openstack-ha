@@ -2,7 +2,7 @@
 # HA in OpenStack's control plane
 
 
-<!-- .slide: data-state="normal" id="typical-control-plane" class="diagram-and-list" data-timing="40" -->
+<!-- .slide: data-state="normal" id="typical-control-plane" class="diagram-and-list" data-menu-title="Typical control plane" data-timing="40" -->
 ## Typical OpenStack HA control plane
 
 <div class="diagrams">
@@ -27,7 +27,7 @@
 
 <div class="solved stamp fragment">
     <p class="solved">SOLVED</p>
-    <p class="mostly fragment">(mostly)</p>
+    <p class="mostly fragment">(yeah, right…)</p>
 </div>
 
 Note:

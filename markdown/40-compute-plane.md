@@ -8,43 +8,30 @@
 </a>
 
 
-<!-- .slide: data-state="normal" id="ocf-architecture" data-menu-title="OCF RAs" class="architecture" data-timing="150" -->
-## `NovaCompute` / `NovaEvacuate` OCF agents
+<!-- .slide: data-state="normal" id="pacemaker-remote" data-menu-title="pacemaker_remote" class="architecture" data-timing="40" -->
+## `pacemaker_remote` to the rescue!
 
 <div class="architecture">
-    <img alt="Standard architecture with pacemaker_remote"
-         class="architecture fragment fade-out" data-fragment-index="1"
+    <img alt="Architecture with pacemaker_remote"
+         class="architecture"
          data-src="images/standard-architecture.svg" />
 
-    <span class="fragment" data-fragment-index="1">
-        <img alt="OCF RA architecture"
-             class="OCF-RA architecture fragment fade-out" data-fragment-index="2"
-             data-src="images/OCF-RA-architecture.svg" />
-    </span>
-
-    <span class="fragment" data-fragment-index="2">
-        <img alt="OCF RA failure domains"
-             class="OCF-RA architecture"
-             data-src="images/OCF-RA-failure-domains.svg" />
-    </span>
+    <img alt="Architecture with pacemaker_remote arrows"
+         class="architecture fragment"
+         data-src="images/standard-architecture-remote-arrows.svg" />
 </div>
 
 Note:
-*   Custom OCF Resource Agents (RAs)
-    *   Pacemaker plugins to manage resources
-*   Custom fencing agent (`fence_compute`) flags host for recovery
-*   `NovaEvacuate` RA polls for flags, and initiates recovery
-    *   Will keep retrying if recovery not possible
-*   `NovaCompute` RA starts / stops `nova-compute`
-    *   Start waits for recovery to complete
+Scalability issue solved by `pacemaker_remote`
 
-
-<!-- .slide: data-state="section-break" id="design-goals" data-timing="10" -->
-# Design goals
+*   New(-ish) Pacemaker feature
+*   Allows core cluster nodes to control "remote"
+    nodes via a `pacemaker_remote` proxy service (daemon)
+*   Can scale to very large numbers
 
 
 <!-- .slide: data-state="normal" id="failure-modes" class="architecture" data-menu-title="Failure modes" data-timing="80" -->
-## Design goal: handle different failure modes
+## Handling different failure modes
 
 <div class="architecture">
     <img alt="Architecture with pacemaker_remote"
@@ -57,68 +44,123 @@ Note:
              data-src="images/explosion.svg" />
     </span>
     <span class="fragment" data-fragment-index="2">
-        <img class="fragment fade-out kernel bang"
+        <img class="fragment fade-out fence"
              data-fragment-index="3"
+             alt="fencing dead compute node"
+             data-src="images/cross.svg" />
+        <img class="fragment fade-out migration"
+             data-fragment-index="3"
+             alt="resurrecting dead VMs elsewhere"
+             data-src="images/migration-arrow.svg" />
+    </span>
+    <span class="fragment" data-fragment-index="3">
+        <img class="fragment fade-out kernel bang"
+             data-fragment-index="4"
              alt="kernel / OS crash or hang"
              data-src="images/explosion.svg" />
     </span>
-    <span class="fragment" data-fragment-index="3">
+    <span class="fragment" data-fragment-index="4">
+        <img class="fragment fade-out fence"
+             data-fragment-index="5"
+             alt="fencing dead compute node"
+             data-src="images/cross.svg" />
+        <img class="fragment fade-out migration"
+             data-fragment-index="5"
+             alt="resurrecting dead VMs elsewhere"
+             data-src="images/migration-arrow.svg" />
+    </span>
+    <span class="fragment" data-fragment-index="5">
         <img class="fragment fade-out libvirt bang"
-             data-fragment-index="4"
+             data-fragment-index="6"
              alt="libvirt crash or hang"
              data-src="images/explosion.svg" />
     </span>
-    <span class="fragment" data-fragment-index="4">
+    <span class="fragment" data-fragment-index="6">
         <img class="fragment fade-out nova-compute bang"
-             data-fragment-index="5"
+             data-fragment-index="7"
              alt="nova-compute crash or hang"
              data-src="images/explosion.svg" />
     </span>
-    <span class="fragment" data-fragment-index="5">
+    <span class="fragment" data-fragment-index="7">
         <img class="fragment fade-out nova-api bang"
-             data-fragment-index="6"
+             data-fragment-index="8"
              alt="nova-api crash or hang"
              data-src="images/explosion.svg" />
     </span>
-    <span class="fragment" data-fragment-index="6">
+    <span class="fragment" data-fragment-index="8">
         <img class="fragment fade-out recovery bang"
-             data-fragment-index="7"
+             data-fragment-index="9"
              alt="recovery controller crash or hang"
              data-src="images/explosion.svg" />
     </span>
-    <span class="fragment" data-fragment-index="7">
+    <span class="fragment" data-fragment-index="9">
         <img class="fragment fade-out VM bang"
-             data-fragment-index="8"
+             data-fragment-index="10"
              alt="VM crash or hang"
              data-src="images/explosion.svg" />
     </span>
         <img class="fragment workload bang"
-             data-fragment-index="8"
+             data-fragment-index="10"
              alt="workload crash or hang"
              data-src="images/explosion.svg" />
 </div>
 
 Note:
 
-*   Needs to protect critical data ⇒ requires *fencing* of either
-    *   storage resource, *or*
-    *   of faulty node (a.k.a. **STONITH**)
-
-    See [previous talk](https://www.openstack.org/videos/video/high-availability-for-pets-and-hypervisors-state-of-the-nation) for details.
-
+*   If we have a compute node failure, after fencing the node,
+    we need to resurrect the VMs in a way which OpenStack is aware of.
+*   Luckily `nova` provides an API for doing this, which is called
+    `nova evacuate`.  So we just call that API and `nova` takes care
+    of the rest.
+*   Without shared storage, simply rebuilds from scratch
 *   Needs to handle failure or (temporary) freeze of:
     *   Hardware (including various NICs)
     *   Kernel
     *   Hypervisor services (e.g. `libvirt`)
     *   OpenStack control plane services
-        *   including recovery workflow controller -
-            this requires persisting workflows to disk
-            and being able to resume workflows if the
-            controller dies
+        *   including resurrection workflow
     *   VM
     *   Workload inside VM (ideally)
+*   We assume that Pacemaker is reliable, otherwise we're sunk!
 
-We assume that Pacemaker is reliable, otherwise we're sunk!
+
+<!-- .slide: data-state="normal" id="ocf-architecture" data-menu-title="OCF RAs" class="architecture" data-timing="150" -->
+## `NovaCompute` / `NovaEvacuate` OCF agents
+
+<div class="architecture">
+    <img alt="OCF RA architecture"
+         class="OCF-RA architecture"
+         data-src="images/OCF-RA-architecture.svg" />
+</div>
+
+Note:
+*   Custom OCF Resource Agents (RAs)
+    *   Pacemaker plugins to manage resources
+*   Custom fencing agent (`fence_compute`) flags host for recovery
+*   `NovaEvacuate` RA polls for flags, and initiates recovery
+    *   Will keep retrying if recovery not possible
+*   `NovaCompute` RA starts / stops `nova-compute`
+    *   Start waits for recovery to complete
+
+
+<!-- .slide: data-state="normal" id="ocf-pros-cons" data-menu-title="OCF RA pros and cons" data-timing="40" -->
+## `NovaCompute` / `NovaEvacuate` OCF agents
+
+### Pros
+
+*   Has been production-ready for a "long" time
+*   Commercial support available
+*   OCF RAs [upstream in `openstack-resource-agents` repo](https://github.com/openstack/openstack-resource-agents/tree/master/ocf) (sort of)
+
+### Cons
+
+*   Known limitations (not bugs):
+    *   Only handles failure of compute node, not of VMs, or `nova-compute`
+    *   Some corner cases still problematic, e.g. if `nova` fails during recovery
+
+
+<!-- .slide: data-state="section-break" id="other-design-goals" data-timing="10" -->
+# What else is missing?
 
 
 <!-- .slide: data-state="normal" id="operability" data-menu-title="Operability" data-timing="40" -->
@@ -136,36 +178,22 @@ historical alerts and corresponding actions.
 This could be incorporated into Horizon.
 
 
-<!-- .slide: data-state="normal" id="configurability-2" data-menu-title="Configurability (2)" data-timing="40" -->
+<!-- .slide: data-state="normal" id="configurability" data-menu-title="Configurability" data-timing="40" -->
 ## Design goal: Configurability
 
 Different cloud operators will want to support different SLAs
-with different workflows.
+with different workflows:
 
 *   <!-- .element: class="fragment" -->
     Choose which VMs to auto-resurrect
 *   <!-- .element: class="fragment" -->
-    Optional use of host reservation to ensure minimum level of redundancy
+    Reserve some hypervisor hosts for recovery
 *   <!-- .element: class="fragment" -->
     Retry thresholds on recovery of processes and VM instances
 *   <!-- .element: class="fragment" -->
     Configurable workflows
 
 Note: There is no one-size-fits-all solution to compute HA.
-
-
-<!-- .slide: data-state="normal" id="upgradability" data-timing="50" -->
-# Upgradability
-
-<figure>
-    <img alt="Upgrade failed dialog box"
-         data-src="images/upgrade-are-failed-2.gif"
-         style="width: 90%" />
-</figure>
-
-Note: We need easy migration from existing compute HA deployments, so
-don't make life hard for (existing customers of) SUSE, NTT, Red Hat,
-or anyone else using upstream solution
 
 
 <!-- .slide: data-state="normal" id="context-aware" data-menu-title="Context-aware recovery" data-timing="120" -->
@@ -201,20 +229,22 @@ or anyone else using upstream solution
         Pre-emption is visible to operators
 
 
-<!-- .slide: data-state="normal" id="ocf-pros-cons" data-menu-title="OCF RA pros and cons" data-timing="40" -->
-## `NovaCompute` / `NovaEvacuate` OCF agents
+<!-- .slide: data-state="normal" id="upgradability" data-timing="50" -->
+# Upgradability
 
-### Pros
+<figure>
+    <img alt="Upgrade failed dialog box"
+         data-src="images/upgrade-are-failed-2.gif"
+         style="width: 90%" />
+</figure>
 
-*   Ready for production use *now*
-*   Commercial support available
-*   RAs [upstream in `openstack-resource-agents` repo](https://github.com/openstack/openstack-resource-agents/tree/master/ocf)
+Note: We need easy migration from existing compute HA deployments, so
+don't make life hard for (existing customers of) SUSE, NTT, Red Hat,
+or anyone else using upstream solution
 
-### Cons
 
-*   Known limitations (not bugs):
-    *   Only handles failure of compute node, not of VMs, or `nova-compute`
-    *   Some corner cases still problematic, e.g. if `nova` fails during recovery
+<!-- .slide: data-state="section-break" id="masakari" data-menu-title="Masakari" data-timing="10" -->
+# Masakari to the rescue!
 
 
 <!-- .slide: data-state="normal" id="masakari-architecture" class="architecture" data-timing="320" -->
@@ -261,44 +291,6 @@ Note:
     *   VM down (detected via `libvirt`)
 
 
-<!-- .slide: data-state="normal" id="modular" data-timing="60" -->
-# Modular architecture
-
-*   <!-- .element: class="fragment" -->
-    Key areas identified in previous Design Summits:
-    *   <!-- .element: class="fragment" -->
-        Host monitoring / recovery
-    *   <!-- .element: class="fragment" -->
-        VM monitoring / recovery
-    *   <!-- .element: class="fragment" -->
-        Process monitoring / recovery
-*   <!-- .element: class="fragment" -->
-    Agreed to split into independent components
-*   <!-- .element: class="fragment" -->
-    https://etherpad.openstack.org/p/newton-instance-ha
-
-
-<!-- .slide: data-state="normal" id="specs" data-timing="50" -->
-# Specs
-
-[`openstack-resource-agents-specs` repository](https://github.com/openstack/openstack-resource-agents-specs/tree/master/specs/newton/approved)
-
-*   <!-- .element: class="fragment" -->
-    Host monitoring
-*   <!-- .element: class="fragment" -->
-    Host recovery
-*   <!-- .element: class="fragment" -->
-    VM monitoring
-*   <!-- .element: class="fragment" -->
-    VM recovery
-*   <!-- .element: class="fragment" -->
-    `libvirtd` OCF RA
-    *   to take action if migration-threshold reached
-*   <!-- .element: class="fragment" -->
-    `NovaCompute` OCF RA
-    *   ditto
-
-
 <!-- .slide: data-state="normal" id="existing-architecture" data-menu-title="OCF architecture" data-timing="70" -->
 
 <div class="new-architecture">
@@ -343,59 +335,39 @@ Note:
 </div>
 
 
-<!-- .slide: data-state="normal" id="evacuate-architecture" data-menu-title="nova's recovery API" class="architecture" data-timing="30" -->
-## `nova`'s recovery API
+<!-- .slide: data-state="normal" id="modular" data-timing="60" -->
+# Modular architecture
 
-<div class="architecture">
-    <img alt="Architecture with pacemaker_remote"
-         class="architecture"
-         data-src="images/standard-architecture.svg" />
-    <span class="fragment" data-fragment-index="1">
-        <img class="fragment fade-out compute-node bang"
-             data-fragment-index="2"
-             alt="compute node explosion!"
-             data-src="images/explosion.svg" />
-    </span>
-    <img class="fragment fence"
-         data-fragment-index="2"
-         alt="fencing dead compute node"
-         data-src="images/cross.svg" />
-    <img alt="Architecture use of evacuate API"
-         data-fragment-index="3"
-         class="evacuate-api-arrow fragment"
-         data-src="images/standard-architecture-evacuate-API-arrow.svg" />
-    <img alt="Architecture use of evacuate API"
-         data-fragment-index="3"
-         class="evacuate-api-arrow fragment"
-         data-src="images/standard-architecture-evacuate-API-arrow.svg" />
-    <img class="fragment migration"
-         data-fragment-index="4"
-         alt="resurrecting dead VMs elsewhere"
-         data-src="images/migration-arrow.svg" />
-</div>
+*   <!-- .element: class="fragment" -->
+    Key areas identified in previous Design Summits:
+    *   <!-- .element: class="fragment" -->
+        Host monitoring / recovery
+    *   <!-- .element: class="fragment" -->
+        VM monitoring / recovery
+    *   <!-- .element: class="fragment" -->
+        Process monitoring / recovery
+*   <!-- .element: class="fragment" -->
+    Agreed to split into independent components
+*   <!-- .element: class="fragment" -->
+    https://etherpad.openstack.org/p/newton-instance-ha
 
-Note:
-*   If we have a compute node failure, after fencing the node,
-    we need to resurrect the VMs in a way which OpenStack is aware of.
-*   Luckily `nova` provides an API for doing this, which is called
-    `nova evacuate`.  So we just call that API and `nova` takes care
-    of the rest.
-*   Without shared storage, simply rebuilds from scratch
 
-<!-- .slide: data-state="normal" id="nova-evacuate" --
-## `nova evacuate`
+<!-- .slide: data-state="normal" id="specs" data-timing="50" -->
+# Specs
 
-*   API provided by `nova` for initiating recovery of VM
-*   http://docs.openstack.org/admin-guide/cli_nova_evacuate.html
+[`openstack-resource-agents-specs` repository](https://github.com/openstack/openstack-resource-agents-specs/tree/master/specs/newton/approved)
 
-```sh
-# nova help evacuate
-usage: nova evacuate [--password <password>] [--on-shared-storage]
-                     <server> [<host>]
-
-Evacuate server from failed host.
-```
-
-*   Used by most HA solutions
-*   Without shared storage, simply rebuilds from scratch
--->
+*   <!-- .element: class="fragment" -->
+    Host monitoring
+*   <!-- .element: class="fragment" -->
+    Host recovery
+*   <!-- .element: class="fragment" -->
+    VM monitoring
+*   <!-- .element: class="fragment" -->
+    VM recovery
+*   <!-- .element: class="fragment" -->
+    `libvirtd` OCF RA
+    *   to take action if migration-threshold reached
+*   <!-- .element: class="fragment" -->
+    `NovaCompute` OCF RA
+    *   ditto

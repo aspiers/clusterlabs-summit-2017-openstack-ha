@@ -2,11 +2,20 @@
 # Question time
 
 
-<!-- .slide: data-state="normal" id="control-plane-questions" data-menu-title="Question menu" data-timing="40" -->
-## Questions relating to control plane
+<!-- .slide: data-state="normal" id="control-plane-poll" data-timing="40" -->
+# Quick poll
 
-*   <!-- .element: class="fragment" -->
-    How's it going so far? &#128561;
+### How's control plane HA going for you so far?
+<!-- .element: style="font-size: 1.4em" -->
+
+<div class="face fragment">&#128516;</div>
+<div class="face fragment">&#128530;</div>
+<div class="face fragment">&#128561;</div>
+
+
+<!-- .slide: data-state="normal" id="control-plane-questions" data-menu-title="Question menu" data-timing="40" -->
+# Questions relating to control plane
+
 *   <!-- .element: class="fragment" -->
     Shouldn't we use an active-active HAProxy architecture?
 *   <!-- .element: class="fragment" -->
