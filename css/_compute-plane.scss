@@ -124,3 +124,80 @@ section div.new-architecture {
         display: block;
     }
 }
+
+#context-aware {
+    h2 {
+        margin-bottom: 0.5em;
+    }
+
+    table {
+        $dark-border:  4px solid $medium-dark-neutral;
+        $med-border:   4px solid $medium-neutral;
+        $light-border: 4px solid white;
+
+        font-weight: bold;
+        font-size: 0.9em;
+        border: none;
+        border-collapse: collapse;
+
+        th, td {
+            text-align: center;
+            vertical-align: middle;
+            border: $light-border;
+        }
+
+        th {
+            border-top: none;
+            border-bottom: $dark-border;
+            background-color: $tint-neutral;
+        }
+
+        th.failure {
+            width: 60%;
+        }
+
+        td.cattle {
+            width: 50%;
+        }
+
+        td.pet {
+            width: 35%;
+        }
+
+        th.action {
+            background-color: white;
+        }
+
+        th.action {
+            border-right: $dark-border;
+        }
+
+        td.action {
+            width: 20%;
+            border-right: $dark-border;
+            border-top: $med-border;
+            background-color: $tint-neutral;
+            color: black;
+        }
+
+        tr:last-child {
+            border-bottom-width: 0px;
+        }
+
+        td {
+            color: white;
+        }
+
+        td.yes {
+            background-color: $medium-green;
+        }
+
+        td.maybe {
+            background-color: $medium-orange;
+        }
+
+        td.no {
+            background-color: $bright-red;
+        }
+    }
+}

@@ -192,6 +192,17 @@ with different workflows:
     Retry thresholds on recovery of processes and VM instances
 *   <!-- .element: class="fragment" -->
     Configurable workflows
+    *   <!-- .element: class="fragment" -->
+        notify cloud operator
+    *   <!-- .element: class="fragment" -->
+        notify external monitoring system
+        ([Vitrage](https://docs.openstack.org/vitrage/latest/),
+        Nagios, Sensu, …)
+    *   <!-- .element: class="fragment" -->
+        fence
+    *   <!-- .element: class="fragment" -->
+        request external service to perform some recovery
+        (resurrect VMs)
 
 Note: There is no one-size-fits-all solution to compute HA.
 
@@ -199,13 +210,71 @@ Note: There is no one-size-fits-all solution to compute HA.
 <!-- .slide: data-state="normal" id="context-aware" data-menu-title="Context-aware recovery" data-timing="120" -->
 ## Design goal: Intelligent, Context-aware Recovery
 
+<br />
+
+In some failure scenarios, VMs are still perfectly healthy
+but unmanageable.
+
+Should they be automatically killed?  Depends on
+the workload.
+<!-- .element: class="fragment" -->
+
+<br />
+
+<table class="waffle fragment" cellspacing="0" cellpadding="0">
+  <thead>
+    <tr>
+      <th colspan="4" class="failure" />
+      <th colspan="2"> Corrective action for</th>
+    </tr>
+    <tr>
+      <th>Admin network</th>
+      <th>Neutron network</th>
+      <th>Storage network</th>
+      <th>`nova-compute` / `libvirtd`</th>
+      <th class="cattle action">cattle</th>
+      <th class="pet action">pets</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="no">Down</td>
+      <td class="yes">Up</td>
+      <td class="yes">Up</td>
+      <td class="yes">Up</td>
+      <td class="cattle action" rowspan="4">Fence &rarr; resurrect</td>
+      <td class="pet action">Notify operator</td>
+    </tr>
+    <tr>
+      <td class="yes">Up</td>
+      <td class="no">Down</td>
+      <td class="yes">Up</td>
+      <td class="yes">Up</td>
+      <td class="pet action">Migrate</td>
+    </tr>
+    <tr>
+      <td class="yes">Up</td>
+      <td class="yes">Up</td>
+      <td class="no">Down</td>
+      <td class="yes">Up</td>
+      <td class="pet action">Fence, resurrect</td>
+    </tr>
+    <tr>
+      <td class="yes">Up</td>
+      <td class="yes">Up</td>
+      <td class="yes">Up</td>
+      <td class="no">Down</td>
+      <td class="pet action">Restart &rarr; notify operator</td>
+    </tr>
+  </tbody>
+</table>
+
+
+<!-- .slide: data-state="normal" id="context-aware-2" data-menu-title="   (continued)" data-timing="120" -->
+## Design goal: Intelligent, Context-aware Recovery (2)
+
 *   <!-- .element: class="fragment" -->
-    If `nova-compute` fails, VMs are still perfectly healthy
-    but unmanageable
-    *   Should they be automatically killed?  Depends on
-        the workload.
-*   <!-- .element: class="fragment" -->
-    Fault deduplication
+    Fault deduplication (via [Vitrage](https://docs.openstack.org/vitrage/latest/))
 *   <!-- .element: class="fragment" -->
     Set host to maintenance mode until recovery is complete
 *   <!-- .element: class="fragment" -->
