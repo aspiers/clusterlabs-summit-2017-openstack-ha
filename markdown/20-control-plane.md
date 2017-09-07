@@ -34,7 +34,7 @@ Note:
 - Sometimes DRBD used instead of shared storage
 
 
-<!-- .slide: data-state="normal" id="neutron-L3" data-timing="5" data-menu-title="Neutron L3 HA" -->
+<!-- .slide: data-state="normal" id="neutron-L3" data-timing="30" data-menu-title="Neutron L3 HA" -->
 # L3 HA in Neutron (networking service)
 
 <a href="https://docs.hpcloud.com/hos-5.x/helion/planning/high_availability.html#HP3.0HA__CVR">
@@ -42,7 +42,7 @@ Note:
 </a>
 
 
-<!-- .slide: data-state="normal" id="neutron-L3-analysis" data-menu-title="L3 HA analysis" data-timing="5" -->
+<!-- .slide: data-state="normal" id="neutron-L3-analysis" data-menu-title="L3 HA analysis" data-timing="30" -->
 # L3 HA in Neutron — analysis
 
 *   [`neutron` HA is tricky](https://youtu.be/vBZgtHgSdOY), but out of the
@@ -58,7 +58,7 @@ scope of this talk
 </a>
 
 
-<!-- .slide: data-state="normal" id="control-plane-caveats" data-timing="5" -->
+<!-- .slide: data-state="normal" id="control-plane-caveats" data-timing="45" -->
 # Other caveats
 
 *   <!-- .element: class="fragment" -->
@@ -72,7 +72,7 @@ Note:
 - Will speculate later in talk on reasons for Pacemaker phobia
 
 
-<!-- .slide: data-state="section-break" id="HAProxy-VIPs" data-timing="5" -->
+<!-- .slide: data-state="section-break" id="HAProxy-VIPs" data-timing="60" -->
 # HAProxy and VIPs
 
 
@@ -131,7 +131,7 @@ Note:
 -->
 
 
-<!-- .slide: data-state="normal" id="RH-control-plane" data-menu-title="RH OSP" data-timing="40" -->
+<!-- .slide: data-state="normal" id="RH-control-plane" data-menu-title="RH OSP" data-timing="45" -->
 ## Red Hat OpenStack Platform control plane
 
 Pacemaker manages:

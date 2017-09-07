@@ -2,7 +2,7 @@
 # Question time
 
 
-<!-- .slide: data-state="normal" id="control-plane-poll" data-timing="40" -->
+<!-- .slide: data-state="normal" id="control-plane-poll" data-timing="60" -->
 # Quick poll
 
 ### How's control plane HA going for you so far?
@@ -16,7 +16,7 @@ Note:
 - emoticon is "face screaming in fear"
 
 
-<!-- .slide: data-state="normal" id="control-plane-questions" data-menu-title="Question menu" data-timing="40" -->
+<!-- .slide: data-state="normal" id="control-plane-questions" data-menu-title="Question menu" data-timing="60" -->
 # Questions relating to control plane
 
 *   <!-- .element: class="fragment" -->
@@ -33,7 +33,7 @@ Note:
     How do we handle multi-site clouds?
 
 
-<!-- .slide: data-state="normal" id="active-active-haproxy" data-menu-title="A/A HAProxy" data-timing="40" -->
+<!-- .slide: data-state="normal" id="active-active-haproxy" data-menu-title="A/A HAProxy" data-timing="120" -->
 ## Fixing the HAProxy bottleneck
 
 Standard active-passive HAProxy architecture:
@@ -55,7 +55,7 @@ Any downsides?
 <!-- .element: class="fragment" data-fragment-index="4" -->
 
 
-<!-- .slide: data-state="normal" id="control-plane-api-1" data-menu-title="OCF RAs" data-timing="40" -->
+<!-- .slide: data-state="normal" id="control-plane-api-1" data-menu-title="OCF RAs" data-timing="90" -->
 ## How should we handle API services?
 
 ### Option 1: Use OCF RAs
@@ -107,7 +107,7 @@ Pacemaker auto-restarts service on crash
         <!-- .element: class="fg-bright-red" -->
 
 
-<!-- .slide: data-state="normal" id="control-plane-api-3" data-menu-title="systemd only" data-timing="40" -->
+<!-- .slide: data-state="normal" id="control-plane-api-3" data-menu-title="systemd only" data-timing="60" -->
 ## How should we handle API services?
 
 ### Option 3: `systemd` only, no Pacemaker, as per Red Hat
@@ -148,7 +148,7 @@ Pacemaker auto-restarts service on crash
     *   Requires `systemd` development
 
 
-<!-- .slide: data-state="normal" id="control-plane-api-5" data-menu-title="OCF wrapping systemd" data-timing="40" -->
+<!-- .slide: data-state="normal" id="control-plane-api-5" data-menu-title="OCF wrapping systemd" data-timing="60" -->
 ## How should we handle API services?
 
 ### Option 5: OCF RAs wrapping `systemctl` / `service(8)`
@@ -171,7 +171,7 @@ Pacemaker auto-restarts service on crash
         dealing with `systemd` quirks
 
 
-<!-- .slide: data-state="normal" id="control-plane-api-6" data-menu-title="OCF / systemd hybrids" data-timing="40" -->
+<!-- .slide: data-state="normal" id="control-plane-api-6" data-menu-title="OCF / systemd hybrids" data-timing="45" -->
 ## How should we handle API services?
 
 ### Option 6: enhance Pacemaker to support `systemd:`&nbsp;/ `ocf:` hybrids
@@ -193,7 +193,7 @@ Pacemaker auto-restarts service on crash
         <span class="fragment">actually, not really!</span>
 
 
-<!-- .slide: data-state="normal" id="control-plane-api-7" data-menu-title="systemd health checks" data-timing="40" -->
+<!-- .slide: data-state="normal" id="control-plane-api-7" data-menu-title="systemd health checks" data-timing="60" -->
 ## How should we handle API services?
 
 ### Option 7: use undocumented `container` meta-attribute
@@ -209,7 +209,7 @@ Pair `systemd` resource with monitor-only OCF RA
     *   Cluster configuration remains relatively complex
 
 
-<!-- .slide: data-state="normal" id="composable-roles" data-menu-title="Composable roles" data-timing="40" -->
+<!-- .slide: data-state="normal" id="composable-roles" data-menu-title="Composable roles" data-timing="120" -->
 ## Should we start moving resources out of core cluster onto remotes?
 
 http://blog.clusterlabs.org/blog/2016/composable-openstack-ha
@@ -227,7 +227,7 @@ Can we auto-promote remotes to core to maintain quorum?
 <!-- .element: class="fragment" -->
 
 
-<!-- .slide: data-state="normal" id="maintenance" data-timing="40" -->
+<!-- .slide: data-state="normal" id="maintenance" data-timing="120" -->
 ## Resource maintenance
 
 *   Sometimes need to restart services (e.g. reload config)
@@ -240,7 +240,7 @@ Can we do better?  Do we need to?
 <!-- .element: class="fragment" -->
 
 
-<!-- .slide: data-state="normal" id="multi-site" data-menu-title="Multi-site" data-timing="40" -->
+<!-- .slide: data-state="normal" id="multi-site" data-menu-title="Multi-site" data-timing="120" -->
 ## How do we handle multi-site clouds?
 
 *   e.g. multiple regions, shared Keystone
