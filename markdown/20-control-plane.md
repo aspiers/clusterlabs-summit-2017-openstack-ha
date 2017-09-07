@@ -18,12 +18,12 @@
 *   <!-- .element: class="fragment" -->
     Stateless active-active API services
 *   <!-- .element: class="fragment" -->
-    [Galera DB](https://mariadb.com/kb/en/the-mariadb-library/galera-cluster/):
-    `ms`&nbsp;/ single master with replication
+    [HAProxy](http://www.haproxy.org/) load-balancer
 *   <!-- .element: class="fragment" -->
     [RabbitMQ](https://www.rabbitmq.com/) active-active
 *   <!-- .element: class="fragment" -->
-    [HAProxy](http://www.haproxy.org/) load-balancer
+    [Galera DB](https://mariadb.com/kb/en/the-mariadb-library/galera-cluster/):
+    `ms`&nbsp;/ single master with replication
 
 <div class="solved stamp fragment">
     <p class="solved">SOLVED</p>
