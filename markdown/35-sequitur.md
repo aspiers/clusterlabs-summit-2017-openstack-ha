@@ -1,5 +1,5 @@
 <!-- .slide: data-state="normal" id="compute-failure" data-menu-title="Compute failure" data-timing="20" -->
-## If only the control plane is HA …
+## If only the control plane is HA&nbsp;…
 
 <img class="arch" alt="control/compute architecture" data-src="images/architecture.svg" />
 <img class="fragment bang" alt="compute node explosion!" data-src="images/explosion.svg" />

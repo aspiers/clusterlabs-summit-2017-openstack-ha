@@ -197,7 +197,7 @@ with different workflows:
     *   <!-- .element: class="fragment" -->
         notify external monitoring system
         ([Vitrage](https://docs.openstack.org/vitrage/latest/),
-        Nagios, Sensu, …)
+        Nagios, Sensu,&nbsp;…)
     *   <!-- .element: class="fragment" -->
         fence
     *   <!-- .element: class="fragment" -->

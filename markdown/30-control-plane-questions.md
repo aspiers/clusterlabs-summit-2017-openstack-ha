@@ -77,7 +77,7 @@ https://launchpad.net/openstack-resource-agents
         Layer boundary violation — requires knowledge of packaging
     *   <!-- .element: class="fragment" data-fragment-index="4" -->
         Monitoring logic probably duplicates probes from "real"
-        monitoring systems (Nagios, Sensu, …)
+        monitoring systems (Nagios, Sensu,&nbsp;…)
     *   <!-- .element: class="fragment" data-fragment-index="5" -->
         Outdated assumptions (e.g. permanent DB connection)
     *   <!-- .element: class="fragment" data-fragment-index="6" -->
