@@ -287,7 +287,7 @@ the workload.
 *   <!-- .element: class="fragment" -->
     Quick response to failures
     *   <!-- .element: class="fragment" -->
-        Push not pull - don't poll
+        Push not pull — don't poll
     *   <!-- .element: class="fragment" -->
         Notifications on message bus
 *   <!-- .element: class="fragment" -->
