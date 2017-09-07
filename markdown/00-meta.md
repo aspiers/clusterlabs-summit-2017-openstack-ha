@@ -14,7 +14,6 @@
 
 
 <!-- .slide: data-state="qrcode" id="qrcode" data-menu-title="QR code" data-timing="0" -->
-
 <div class="qrcode" id="qrcode-talk"/>
 <h3><a href="https://aspiers.github.io/clusterlabs-summit-2017-openstack-ha/" target="_blank"
        id="talk">https://aspiers.github.io/clusterlabs-summit-2017-openstack-ha/</a></h3>
