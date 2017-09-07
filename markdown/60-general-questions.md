@@ -51,6 +51,13 @@ but often documentation / man pages out of date or incomplete.
 <!-- .slide: data-state="normal" id="indirect-probes" data-menu-title="Indirect probes" data-timing="40" -->
 ## Can we have indirect liveness probes?
 
-Like with [a Gossip protocol](https://en.wikipedia.org/wiki/Gossip_protocol)
+Like with [a gossip protocol](https://en.wikipedia.org/wiki/Gossip_protocol)
 
 e.g. 5-node cluster, nodes 2/3/4 lose connection to node 5
+
+*   node 1 can still reach 5
+*   liveness (or even cluster events) can be gossiped to all nodes
+
+Note:
+- Mentioned in [Tokyo compute HA talk](https://www.openstack.org/videos/tokio-2015/distributed-health-checking-for-compute-node-high-availability)
+- [PDF of slides](https://schd.ws/hosted_files/openstacksummitoctober2015tokyo/d5/summit_ha.pdf) (doesn't render right in Chrome)
