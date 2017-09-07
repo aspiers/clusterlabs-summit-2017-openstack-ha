@@ -87,7 +87,7 @@ Note:
   rather than just checking whether the pid exists
 
 
-<!-- .slide: data-state="normal" id="control-plane-api-2" data-menu-title="systemd" data-timing="40" -->
+<!-- .slide: data-state="normal" id="control-plane-api-2" data-menu-title="Pacemaker + systemd" data-timing="40" -->
 ## How should we handle API services?
 
 ### Option 2: Pacemaker `systemd:` resources
@@ -107,7 +107,7 @@ Pacemaker auto-restarts service on crash
         <!-- .element: class="fg-bright-red" -->
 
 
-<!-- .slide: data-state="normal" id="control-plane-api-3" data-menu-title="systemd" data-timing="40" -->
+<!-- .slide: data-state="normal" id="control-plane-api-3" data-menu-title="systemd only" data-timing="40" -->
 ## How should we handle API services?
 
 ### Option 3: `systemd` only, no Pacemaker, as per Red Hat
@@ -171,7 +171,7 @@ Pacemaker auto-restarts service on crash
         dealing with `systemd` quirks
 
 
-<!-- .slide: data-state="normal" id="control-plane-api-6" data-menu-title="OCF wrapping systemd" data-timing="40" -->
+<!-- .slide: data-state="normal" id="control-plane-api-6" data-menu-title="OCF / systemd hybrids" data-timing="40" -->
 ## How should we handle API services?
 
 ### Option 6: enhance Pacemaker to support `systemd:`&nbsp;/ `ocf:` hybrids
