@@ -190,7 +190,9 @@ Pacemaker auto-restarts service on crash
 *   <!-- .element: class="fragment" -->
     Cons
     *   Cluster configuration remains relatively complex
-    *   More work for Ken
+    *   <!-- .element: class="fragment" -->
+        More work for Ken&nbsp;…
+        <span class="fragment">actually, not really!</span>
 
 
 <!-- .slide: data-state="normal" id="control-plane-api-7" data-menu-title="systemd health checks" data-timing="40" -->
