@@ -14,6 +14,8 @@
 
 *   1 or more clusters, possibly different sizes
 *   <!-- .element: class="fragment" -->
+    [Pacemaker](http://clusterlabs.org/) monitors and controls nodes and services
+*   <!-- .element: class="fragment" -->
     Stateless active-active API services
 *   <!-- .element: class="fragment" -->
     [Galera DB](https://mariadb.com/kb/en/the-mariadb-library/galera-cluster/):
@@ -22,8 +24,6 @@
     [RabbitMQ](https://www.rabbitmq.com/) active-active
 *   <!-- .element: class="fragment" -->
     [HAProxy](http://www.haproxy.org/) load-balancer
-*   <!-- .element: class="fragment" -->
-    [Pacemaker](http://clusterlabs.org/) monitors and controls nodes and services
 
 <div class="solved stamp fragment">
     <p class="solved">SOLVED</p>
