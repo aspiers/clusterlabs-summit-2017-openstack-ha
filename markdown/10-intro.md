@@ -16,6 +16,9 @@
         <h3 class="email"><a href="mailto:aspiers@suse.com">aspiers@suse.com</a></h3>
     </div>
 </div>
+<div class="qrcode" id="qrcode-cover-slide"/>
+<a href="https://aspiers.github.io/clusterlabs-summit-2017-openstack-ha/"
+   style="display: none;" target="_blank" id="cover-slide">https://aspiers.github.io/clusterlabs-summit-2017-openstack-ha/</a>
 
 
 <!-- .slide: data-state="normal" id="agenda" data-timing="40" -->

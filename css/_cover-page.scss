@@ -21,6 +21,17 @@
 
         position: relative;
 
+        .qrcode {
+            position: absolute;
+            top: 5%;
+            left: 80%;
+            width: 10em;
+            height: 10em;
+            img {
+                padding: 0.5em;
+            }
+        }
+
         .title {
             position: absolute;
             top: 43%;
