@@ -10,6 +10,8 @@
 *   <!-- .element: class="fragment" -->
     How can we get better testing?
     *   https://review.openstack.org/#/c/443504/
+*   <!-- .element: class="fragment" -->
+    Indirect probes?
 
 
 <!-- .slide: data-state="normal" id="debugging" data-menu-title="Debugging" data-timing="40" -->
@@ -44,3 +46,11 @@ but often documentation / man pages out of date or incomplete.
 *   <!-- .element: class="fragment" -->
     a document explaining how the various timeout/migration parameters affect pengine is sorely needed
     *   something like http://ourobengr.com/ha/#worstcase but not just for STONITH
+
+
+<!-- .slide: data-state="normal" id="indirect-probes" data-menu-title="Indirect probes" data-timing="40" -->
+## Can we have indirect liveness probes?
+
+Like with [a Gossip protocol](https://en.wikipedia.org/wiki/Gossip_protocol)
+
+e.g. 5-node cluster, nodes 2/3/4 lose connection to node 5

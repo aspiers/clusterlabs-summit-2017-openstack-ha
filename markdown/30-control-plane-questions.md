@@ -28,8 +28,6 @@
     Does Pacemaker need better maintenance capabilities?
 *   <!-- .element: class="fragment" -->
     How do we handle multi-site clouds?
-*   <!-- .element: class="fragment" -->
-    Indirect probes?
 
 Note:
 - emoticon is "face screaming in fear"
@@ -254,9 +252,3 @@ Can we do better?  Do we need to?
     *   Can do this with HAProxy
 *   <!-- .element: class="fragment" -->
     `booth` is obvious candidate for deciding master site
-
-
-<!-- .slide: data-state="normal" id="indirect-probes" data-menu-title="Indirect probes" data-timing="40" -->
-## Can we have indirect liveness probes?
-
-Like with the Gossip protocol
