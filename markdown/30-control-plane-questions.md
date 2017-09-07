@@ -70,9 +70,9 @@ https://launchpad.net/openstack-resource-agents
 *   <!-- .element: class="fragment" data-fragment-index="2" -->
     Cons
     *   <!-- .element: class="fragment" data-fragment-index="2" -->
-        Duplicates a lot of logic / data already packaged by vendor
-        *   location of binary / pid / config file,
-            start parameters, uid / guid, …
+        Duplicates a lot of logic&nbsp;/ data already packaged by vendor
+        *   location of binary&nbsp;/ pid&nbsp;/ config file,
+            start parameters, uid&nbsp;/ guid,&nbsp;…
     *   <!-- .element: class="fragment" data-fragment-index="3" -->
         Layer boundary violation — requires knowledge of packaging
     *   <!-- .element: class="fragment" data-fragment-index="4" -->
@@ -128,7 +128,7 @@ Pacemaker auto-restarts service on crash
         <!-- .element: class="fg-medium-dark-neutral" -->
     *   <!-- .element: class="fragment" data-fragment-index="3" -->
         Failures not surfaced via UI &rarr;
-        requires separate monitoring / alerting component
+        requires separate monitoring&nbsp;/ alerting component
         <!-- .element: class="fg-medium-dark-neutral" -->
     *   <!-- .element: class="fragment" data-fragment-index="4" -->
         **Does not handle malfunctioning services, only crashing
@@ -176,7 +176,7 @@ Pacemaker auto-restarts service on crash
 <!-- .slide: data-state="normal" id="control-plane-api-6" data-menu-title="OCF wrapping systemd" data-timing="40" -->
 ## How should we handle API services?
 
-### Option 6: enhance Pacemaker to support `systemd:` / `ocf:` hybrids
+### Option 6: enhance Pacemaker to support `systemd:`&nbsp;/ `ocf:` hybrids
 
 *   `start` / `stop` / `status` via `systemd`
 *   `monitor` via OCF RA
