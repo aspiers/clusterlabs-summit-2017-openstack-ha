@@ -25,7 +25,7 @@
     Currently all log messages are targeted at developers
     *  but those should be the `DEBUG`-level ones
 *   <!-- .element: class="fragment" -->
-    messages logged at higher levels than `DEBUG` should be targetted at users
+    messages logged at higher levels than `DEBUG` should be targeted at users
     <br/> i.e. don't assume in-depth knowledge of Pacemaker internals!
     *   https://bugs.clusterlabs.org/show_bug.cgi?id=5294
 
