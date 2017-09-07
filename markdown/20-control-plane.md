@@ -17,7 +17,7 @@
     Stateless active-active API services
 *   <!-- .element: class="fragment" -->
     [Galera DB](https://mariadb.com/kb/en/the-mariadb-library/galera-cluster/):
-    active-passive&nbsp;/ single master with replication
+    `ms`&nbsp;/ single master with replication
 *   <!-- .element: class="fragment" -->
     [RabbitMQ](https://www.rabbitmq.com/) active-active
 *   <!-- .element: class="fragment" -->
