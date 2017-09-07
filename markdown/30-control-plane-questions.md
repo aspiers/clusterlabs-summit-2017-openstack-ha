@@ -251,6 +251,7 @@ Can we do better?  Do we need to?
 *   <!-- .element: class="fragment" -->
     Keystone writes are more difficult
     *   Need to ensure they get directed to one site
+    *   Can do this with HAProxy
 *   <!-- .element: class="fragment" -->
     `booth` is obvious candidate for deciding master site
 
