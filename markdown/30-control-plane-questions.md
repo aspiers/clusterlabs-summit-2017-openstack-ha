@@ -12,6 +12,9 @@
 <div class="face fragment">&#128530;</div>
 <div class="face fragment">&#128561;</div>
 
+Note:
+- emoticon is "face screaming in fear"
+
 
 <!-- .slide: data-state="normal" id="control-plane-questions" data-menu-title="Question menu" data-timing="40" -->
 # Questions relating to control plane
@@ -28,9 +31,6 @@
     Does Pacemaker need better maintenance capabilities?
 *   <!-- .element: class="fragment" -->
     How do we handle multi-site clouds?
-
-Note:
-- emoticon is "face screaming in fear"
 
 
 <!-- .slide: data-state="normal" id="active-active-haproxy" data-menu-title="A/A HAProxy" data-timing="40" -->
